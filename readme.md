@@ -118,7 +118,7 @@ http://localhost:8501
 ## ☁️ Deploy on Streamlit Cloud
 
 1. Push the project to GitHub
-2. Visit: [https://share.streamlit.io](https://share.streamlit.io)
+2. Visit: [[car-price-predictor](https://car-price-predictor-comparator-fy28vojgx328hx8asrkgcj.streamlit.app/)]
 3. Select your repository
 4. Set the main file path to:
 
