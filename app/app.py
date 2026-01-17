@@ -2,6 +2,7 @@
 # -------------------------------------------------
 # Run: streamlit run streamlit_car_price_app.py
 
+import os
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -13,8 +14,6 @@ from pathlib import Path
 # =======================
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-MODEL_PATH = BASE_DIR / "models" / "catboost_model.pkl"
 DATA_PATH = BASE_DIR / "data" / "processed" / "Cleaned_Car_data.csv"
 
 
@@ -80,8 +79,12 @@ st.caption("Single prediction • Multi‑car comparison • Confidence interval
 # =======================
 @st.cache_resource
 def load_model():
-    with open(MODEL_PATH, "rb") as f:
+    base_dir = os.path.dirname(__file__)
+    model_path = os.path.join(base_dir, "..", "models", "catboost_model.pkl")
+
+    with open(model_path, "rb") as f:
         return pickle.load(f)
+
 
 pipe = load_model()
 
