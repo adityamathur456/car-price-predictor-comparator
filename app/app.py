@@ -77,16 +77,16 @@ st.caption("Single prediction • Multi‑car comparison • Confidence interval
 # =======================
 # Load Model
 # =======================
-@st.cache_resource
-def load_model():
-    base_dir = os.path.dirname(__file__)
-    model_path = os.path.join(base_dir, "..", "models", "catboost_model.pkl")
+# @st.cache_resource
+# def load_model():
+#     base_dir = os.path.dirname(__file__)
+#     model_path = os.path.join(base_dir, "..", "models", "catboost_model.pkl")
 
-    with open(model_path, "rb") as f:
-        return pickle.load(f)
+#     with open(model_path, "rb") as f:
+#         return pickle.load(f)
 
 
-pipe = load_model()
+# pipe = load_model()
 
 # =======================
 # Load Dataset for dropdowns
