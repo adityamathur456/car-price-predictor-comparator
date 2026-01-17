@@ -1,4 +1,4 @@
-import pickle
+import joblib
 import seaborn as sns
 import pandas as pd
 import numpy as np
@@ -99,24 +99,24 @@ print("R2 score:",r2_score(y_test,y_pred))
 
 # Hyperparameter Tuning with different random states
 # Finding the best random state for train-test split
-scores=[]
-for i in range(100):
-    X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.1,random_state=i)
-    catBoost=model
-    pipe=make_pipeline(column_trans,catBoost)
-    pipe.fit(X_train,y_train)
-    y_pred=pipe.predict(X_test)
-    scores.append(r2_score(y_test,y_pred))
+# scores=[]
+# for i in range(100):
+#     X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.1,random_state=i)
+#     catBoost=model
+#     pipe=make_pipeline(column_trans,catBoost)
+#     pipe.fit(X_train,y_train)
+#     y_pred=pipe.predict(X_test)
+#     scores.append(r2_score(y_test,y_pred))
 
 # Best random state
-print(np.argmax(scores))
-print(scores[np.argmax(scores)])
+# print(np.argmax(scores))
+# print(scores[np.argmax(scores)])
 
 # predicting a sample
 print(pipe.predict(pd.DataFrame(columns=X_test.columns,data=np.array(['Maruti Suzuki Swift','Maruti',2019,100,'Petrol']).reshape(1,5))))
 
 # Final Model Training with best random state
-X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.1,random_state=np.argmax(scores))
+X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.1,random_state=84)
 catBoost=model
 pipe=make_pipeline(column_trans,catBoost)
 pipe.fit(X_train,y_train)
@@ -126,6 +126,6 @@ y_pred=pipe.predict(X_test)
 print("R2 score:",r2_score(y_test,y_pred))
 
 # Save the model
-pickle.dump(pipe,open('catboost_model.pkl','wb'))
+joblib.dump(pipe, "catboost_model.pkl")
 pipe.predict(pd.DataFrame(columns=['name','company','year','kms_driven','fuel_type'],data=np.array(['Maruti Suzuki Swift','Maruti',2019,100,'Petrol']).reshape(1,5)))
 pipe.steps[0][1].transformers[0][1].categories[0]

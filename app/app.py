@@ -1,20 +1,20 @@
 # Streamlit Advanced Car Price Prediction & Comparison App
 # -------------------------------------------------
 # Run: streamlit run streamlit_car_price_app.py
-
 import os
 import streamlit as st
 import pandas as pd
 import numpy as np
-import pickle
+import joblib
 from pathlib import Path
 
 # =======================
 # Config
 # =======================
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-DATA_PATH = BASE_DIR / "data" / "processed" / "Cleaned_Car_data.csv"
+BASE_DIR = os.path.dirname(__file__)
+MODEL_PATH = os.path.join(BASE_DIR, "..", "models", "catboost_model.pkl")
+DATA_PATH = os.path.join(BASE_DIR, "..", "data/processed", "Cleaned_Car_data.csv")
 
 
 st.set_page_config(page_title="Car Price Predictor", page_icon="🚗", layout="wide")
@@ -79,12 +79,8 @@ st.caption("Single prediction • Multi‑car comparison • Confidence interval
 # =======================
 @st.cache_resource
 def load_model():
-    base_dir = os.path.dirname(__file__)
-    model_path = os.path.join(base_dir, "..", "models", "catboost_model.pkl")
-
-    with open(model_path, "rb") as f:
-        return pickle.load(f)
-
+    with open(MODEL_PATH, "rb") as f:
+        return joblib.load(MODEL_PATH)
 
 pipe = load_model()
 
